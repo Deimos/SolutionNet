@@ -1,0 +1,17 @@
+{% from "_form_macros.html" import render_field %}
+{% extends "base.html" %}
+
+{% block title %}Register - {% endblock %}
+
+{% block content %}
+<h1>Register an Account</h1>
+<form method="post" action="/register">
+    {{ form.hidden_tag() }}
+    {{ render_field(form.username) }}
+    {{ render_field(form.email) }}
+    {{ render_field(form.password) }}
+    {{ render_field(form.password_confirm) }}
+    <div class="form_submit">{{ form.submit }}</div>
+</form>
+<div class="small" style="float:left">* Your email address will not be shared with anyone. It will be used to send your username, for password resets, and in the (unlikely) event of an important notification for all users.</div>
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}"{{ level.name|safe }}" Solution Statistics - {% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load('visualization', '1', {packages: ['corechart']});
+</script>
+<script type="text/javascript">
+function drawVisualization() {
+    var data = new google.visualization.DataTable();
+    var raw_data = [['Number of solutions', {{ chart_data['reactor_data'] }}]];
+
+    var reactors = [{{ chart_data['reactor_labels']|safe }}];
+
+    data.addColumn('string', 'Reactors');
+    for (var i = 0; i  < raw_data.length; ++i) {
+        data.addColumn('number', raw_data[i][0]);    
+    }
+
+    data.addRows(reactors.length);
+
+    for (var j = 0; j < reactors.length; ++j) {    
+        data.setValue(j, 0, reactors[j].toString());    
+    }
+    for (var i = 0; i  < raw_data.length; ++i) {
+        for (var j = 1; j  < raw_data[i].length; ++j) {
+            data.setValue(j-1, i+1, raw_data[i][j]);    
+        }
+    }
+
+    new google.visualization.ColumnChart(document.getElementById('reactors')).
+        draw(data,
+                {
+                title:"Reactors Used",
+                titleTextStyle: {color: 'white', fontSize: 20},
+                backgroundColor:"black",
+                legend:'none',
+                hAxis: {title: "Reactors", textStyle: {color: 'white'}, titleTextStyle: {color: 'white', fontSize: 16}, maxAlternation: 1},
+                vAxis: {title: "Number of Solutions", textStyle: {color: 'white'}, titleTextStyle: {color: 'white', fontSize: 16}}
+                }
+            );
+
+    var data = new google.visualization.DataTable();
+    var raw_data = [['Number of solutions', {{ chart_data['symbol_data'] }}]];
+
+    var symbols = [{{ chart_data['symbol_labels']|safe }}];
+
+    data.addColumn('string', 'Symbols');
+    for (var i = 0; i  < raw_data.length; ++i) {
+        data.addColumn('number', raw_data[i][0]);    
+    }
+
+    data.addRows(symbols.length);
+
+    for (var j = 0; j < symbols.length; ++j) {    
+        data.setValue(j, 0, symbols[j].toString());    
+    }
+    for (var i = 0; i  < raw_data.length; ++i) {
+        for (var j = 1; j  < raw_data[i].length; ++j) {
+            data.setValue(j-1, i+1, raw_data[i][j]);    
+        }
+    }
+
+    new google.visualization.ColumnChart(document.getElementById('symbols')).
+        draw(data,
+                {
+                title:"Symbols Used",
+                titleTextStyle: {color: 'white', fontSize: 20},
+                backgroundColor:"black",
+                legend:'none',
+                hAxis: {title: "Symbols", textStyle: {color: 'white'}, titleTextStyle: {color: 'white', fontSize: 16}, maxAlternation: 1},
+                vAxis: {title: "Number of Solutions", textStyle: {color: 'white'}, titleTextStyle: {color: 'white', fontSize: 16}}
+                }
+            );
+
+    var data = new google.visualization.DataTable();
+    var raw_data = [['Number of solutions', {{ chart_data['cycle_data'] }}]];
+
+    var cycles = [{{ chart_data['cycle_labels']|safe }}];
+
+    data.addColumn('string', 'Cycles');
+    for (var i = 0; i  < raw_data.length; ++i) {
+        data.addColumn('number', raw_data[i][0]);    
+    }
+
+    data.addRows(cycles.length);
+
+    for (var j = 0; j < cycles.length; ++j) {    
+        data.setValue(j, 0, cycles[j].toString());    
+    }
+    for (var i = 0; i  < raw_data.length; ++i) {
+        for (var j = 1; j  < raw_data[i].length; ++j) {
+            data.setValue(j-1, i+1, raw_data[i][j]);    
+        }
+    }
+
+    new google.visualization.ColumnChart(document.getElementById('cycles')).
+        draw(data,
+                {
+                title:"Cycles Used",
+                titleTextStyle: {color: 'white', fontSize: 20},
+                backgroundColor:"black",
+                legend:'none',
+                hAxis: {title: "Cycles", textStyle: {color: 'white'}, titleTextStyle: {color: 'white', fontSize: 16}, maxAlternation: 1},
+                vAxis: {title: "Number of Solutions", textStyle: {color: 'white'}, titleTextStyle: {color: 'white', fontSize: 16}}
+                }
+            );
+}
+
+google.setOnLoadCallback(drawVisualization);
+</script>
+{% endblock %}
+
+{% block content %}
+<h1>"{{ level.name|safe }}" Solution Statistics</h1>
+<h2>General Stats</h2>
+<ul>
+    <li>{{ chart_data['total_solutions'] }} solutions collected.</li>
+    <li>Mean (average) cycles: {{ chart_data['cycle_mean'] }}</li>
+    <li>Mean (average) reactors: {{ chart_data['reactor_mean'] }}</li>
+    <li>Mean (average) symbols: {{ chart_data['symbol_mean'] }}</li>
+    {% if best_by_cycles %}
+    <li>Best SolutionNet solution by cycles: <a href="/solution/{{ best_by_cycles.solution.level.slug }}/{{ best_by_cycles.solution.solution_id }}">{{ best_by_cycles.solution.cycle_count }} cycles, by {{ best_by_cycles.solution.user.username }}</a> &mdash; <a href="/leaderboards/{{ best_by_cycles.solution.level.slug }}/cycles">view whole leaderboard</a></li>
+    {% endif %}
+    {% if best_by_symbols %}
+    <li>Best SolutionNet solution by symbols: <a href="/solution/{{ best_by_symbols.solution.level.slug }}/{{ best_by_symbols.solution.solution_id }}">{{ best_by_symbols.solution.symbol_count }} symbols, by {{ best_by_symbols.solution.user.username }}</a> &mdash; <a href="/leaderboards/{{ best_by_symbols.solution.level.slug }}/symbols">view whole leaderboard</a></li>
+    {% endif %}
+</ul>
+<h2>Charts</h2>
+<div id="cycles" style="width: 100%; height: 400px;"></div>
+<div id="reactors" style="width: 100%; height: 400px;"></div>
+<div id="symbols" style="width: 100%; height: 400px;"></div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% from "_form_macros.html" import render_field %}
+{% extends "base.html" %}
+
+{% block title %}Upload Save File - {% endblock %}
+
+{% block content %}
+<h1>Upload Save File</h1>
+<div class="warning">NOTE: All solutions from an uploaded save file will be publicly accessible. "Private" uploads may be added in the future, but for now, if you don't want other people viewing your solutions, don't upload them.</div>
+<p><strong>Please check the size of your save file before uploading</strong>. You may upload either a SpaceChem save file, or a zip file containing a single SpaceChem save file. SpaceChem keeps an infinite undo-history, so if you have played the game for a long time, your save file is likely extremely large. Zipping it should lower your upload time by 90% or more.</p>
+<p>If you don't know where to find your save file, or for other common questions related to uploading solutions, please <a href="/faq">refer to the FAQ</a>.</p>
+
+<form method="post" action="/upload" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    {{ render_field(form.save) }}
+    {{ render_field(form.upload_all, multiple=True) }}
+    <div class="form_submit">{{ form.submit }}</div>
+</form>
+{% endblock %}

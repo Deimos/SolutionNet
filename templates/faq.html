@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}FAQ - {% endblock %}
+
+{% block content %}
+<h1>SolutionNet FAQ</h1>
+
+<ol style="list-style-type: decimal">
+    <li><a href="#how-do-I-add">How do I add my solutions to SolutionNet?</a></li>
+    <li><a href="#save-file-location">Where is my SpaceChem save file located?</a></li>
+    <li><a href="#hidden-folders">Why can't I find the folder that my save should be in?</a></li>
+    <li><a href="#repeat-uploads">I already uploaded a save file, but now I've improved some solutions, how do I add the new ones?</a></li>
+    <li><a href="#remove-solution">What if I want to remove a solution (because you've uploaded an improved version, it doesn't work, etc)?</a></li>
+    <li><a href="#solution-not-saved">I know I made some small changes to a solution, so why does the site think it's still the same and won't let me upload it?</a></li>
+</ol>
+<hr />
+<a name="how-do-I-add"></a>
+<h3>How do I add my solutions to SolutionNet?</h3>
+<p>All solutions have to be added manually, by <a href="/register">registering an account</a> and then uploading your saved game.</p>
+
+<a name="save-file-location"></a>
+<h3>Where is my SpaceChem save file located?</h3>
+<p>SpaceChem save files are named 000.user, 001.user, etc. (with older profiles having lower numbers) and are located in the following directory:</p>
+<ul>
+    <li><strong>Windows XP:</strong> C:\Documents and Settings\&lt;username&gt;\Local Settings\Application Data\Zachtronics Industries\SpaceChem\save</li>
+    <li><strong>Windows 7 / Vista:</strong> C:\Users\&lt;username&gt;\AppData\Local\Zachtronics Industries\SpaceChem\save</li>
+    <li><strong>OSX / Linux:</strong> ~/.local/share/Zachtronics Industries/SpaceChem</li>
+</ul>
+
+<a name="hidden-folders"></a>
+<h3>Why can't I find the folder that my save should be in?</h3>
+<p>SpaceChem saves are kept inside hidden folders, so make sure that you have hidden folders set to show on your OS.</p>
+<p>On Windows, open a folder, then go to the "Tools" menu, then click "Folder Options". Change to the "View" tab in the pop-up window, then in the "Advanced settings" box, scroll down and find the "Hidden files and folders" options, and select "Show hidden files and folders". Also ensure that the "Hide protected operating system files" checkbox is unchecked. Then click the "Apply" button, and the "Apply to All Folders" button, and "OK" to close the window.</p>
+<p>On OSX, when you are selecting a file to upload, press Command-Shift-. (period) to display the hidden ".locals" folder in your home directory.</p>
+
+<a name="repeat-uploads"></a>
+<h3>I already uploaded a save file, but now I've improved some solutions, how do I add the new ones?</h3>
+<p>Just upload your save file again, the site will automatically detect which solutions are different, and add those, skipping any unchanged solutions. Note that the new solutions will be <em>added</em>, your old solutions will still be kept, not overwritten.</p>
+<p>This is by design, since it allows you to upload solutions for different purposes on the same level, such as trying to minimize cycles and symbols separately, trying solutions with different numbers of reactors, creating a solution without using SYNC instructions, etc.</p>
+
+<a name="remove-solution"></a>
+<h3>What if I want to remove a solution (because you've uploaded an improved version, it doesn't work, etc)?</h3>
+<p>Open the solution (from either the leaderboards or your user page) and ensure that it is the solution you want to remove. Then click the  "[Delete this solution]" link near the top in red, confirm on the next page, and the solution will be deleted.</p>
+<p>This action cannot be reversed (unless you reupload your solution), so please use it with care.</p>
+
+<a name="solution-not-saved"></a>
+<h3>I know I made some small changes to a solution, so why does the site think it's still the same and won't let me upload it?</h3>
+<p>Make sure that you run any changed solutions through to completion in the game before uploading your save file. The solution's statistics (cycles/symbols/reactors) in your save file are only updated when the solution has been run and verified to work by completing the level. So uploading solutions that have not been run will add them to the site with incorrect statistics.</p>
+<p>SolutionNet uses a very simple duplicate-detection method and just checks to see if the statistics have changed, so if you haven't completely run your changed solution, it will appear to be the same as the previous version.</p>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% macro render_field(field, small=False, multiple=False) %}
+    <div class="form_row">
+        <div class="form_label">{{ field.label }}</div>
+        {% if multiple %}
+            <div class="form_input small_input">
+            <ul>
+            {% for subfield in field %}
+               <li>{{ subfield }} {{ subfield.label }}</li>
+            {% endfor %}
+            </ul>
+            </div>
+        {% else %}
+            <div class="form_input{% if small %} small_input{% endif %}">{{ field() }}</div>
+        {% endif %}
+        {% if field.errors %}
+            <div class="form_errors">
+            <ul>
+                {% for error in field.errors %}<li>{{ error }}</li>{% endfor %}
+            </ul>
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}

@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}SolutionNet - Share and compare solutions for SpaceChem</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+    <style type="text/css">
+        @import url("/static/reset.css");
+        @import url("/static/styles.css");
+    </style>
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-19316241-5']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    {% block scripts %}{% endblock %}
+</head>
+<body>
+<div id="wrapper">
+<div id="menu">
+    <a href="/"><img src="/static/logo.png" alt="SolutionNet" /></a><br />
+    <ul>
+        <li><a href="/leaderboards">SolutionNet Leaderboards</a></li>
+        <li><a href="/solution-stats">Solution Statistics</a></li>
+        <li><a href="/faq">FAQ</a></li>
+    </ul>
+    <hr />
+    {% if 'username' in session %}
+    <div id="logged_in">Logged in as <a href="/user/{{ session['username'] }}">{{ session['username'] }}</a></div>
+    <ul>
+        <li><a href="/upload">Upload a Save File</a></li>
+        <li><a href="/user-settings">Change User Settings</a></li>
+        <li><a href="/logout">Log out</a></li>
+    </ul>
+    {% else %}
+    <div id="logged_in">Not logged in</div>
+    <ul>
+        <li><a href="/login">Log in</a></li>
+        <li><a href="/register">Register an account</a></li>
+    </ul>
+    {% endif %}
+</div>
+
+<div id="content">
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %}
+<ul id="messages">
+    {% for category, message in messages %}
+    <li class="{{ category }}">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif%}
+{% endwith %}
+{% block content %}{% endblock %}
+</div>
+<div id="footer">
+    Want to discuss SolutionNet or SpaceChem in general? Please join us in <a href="http://www.reddit.com/r/spacechem">the official SpaceChem subreddit</a>.<br />
+    SolutionNet is maintained by Chad Birch (<a href="/user/Deimos">Deimos</a> on SolutionNet, <a href="http://www.reddit.com/user/Deimorz">Deimorz</a> on reddit).<br />
+    The site is open-source, with <a href="http://www.github.com/Deimos/SolutionNet">its code available on GitHub</a>.
+    <div class="small">
+        Many images are copyrighted by <a href="http://www.zachtronicsindustries.com">Zachtronics Industries</a>, and are used here under Fair Use.<br />
+        Lightbulb symbol in SolutionNet logo created by <a href="http://thenounproject.com">The Noun Project</a>.
+    </div>
+</div>
+</div>
+</body>
+</html>

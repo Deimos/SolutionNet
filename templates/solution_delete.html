@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Delete Solution - {% endblock %}
+
+{% block content %}
+<h1>Delete Solution</h1>
+
+<p>Are you sure you want to delete a solution for "{{ solution.level.name }}"?</p>
+
+<p><a href="/solution/{{ solution.level.slug }}/{{ solution.solution_id }}">Cancel</a> / <a href="/solution-delete/{{ solution.solution_id }}?confirm=1" style="color:#f00; font-weight: bold">Confirm Deletion</a></p>
+{% endblock %}

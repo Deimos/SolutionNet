@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Unapproved Solutions - {% endblock %}
+{% block content %}
+<h1>Unapproved Solutions</h1>
+
+{% if solutions %}
+<p>Select solutions to upload, all other solutions will be discarded.</p>
+<form method="post">
+<table class="data">
+<tr><th>&nbsp;</th><th>Level</th><th class="number">Cycles</th><th class="number">Symbols</th><th class="number">Reactors</th><th>Uploaded</th></tr>
+{% for solution in solutions %}
+<tr class="{{ loop.cycle('odd', 'even') }}">
+    <td><input type="checkbox" id="approve" name="{{ solution.solution_id }}" value="1" checked="checked" /></td>
+    <td style="width:100%">
+        <a href="/solution/{{ solution.level.slug }}/{{ solution.solution_id }}">{{ solution.level.number}} - {{ solution.level.name|safe }}</a>
+    </td>
+    <td class="number">{{ solution.cycle_count }}</td>
+    <td class="number">{{ solution.symbol_count }}</td>
+    <td class="number">{{ solution.reactor_count }}</td>
+    <td style="white-space: nowrap">{{ solution.upload_time.strftime('%Y-%m-%d, %H:%M') }}</td>
+</tr>
+{% endfor %}
+</table>
+<br /><br />
+<input type="submit" value="Approve solutions" />
+</form>
+{% else %}
+<p>No unapproved solutions</p>
+{% endif %}
+{% endblock %}

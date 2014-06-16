@@ -1,0 +1,499 @@
+a, a.visited
+{
+    color: #5d8fff;
+    text-decoration: none;
+    border: 0;
+}
+
+a:hover
+{
+    text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6
+{
+    clear: both;
+    font-weight: bold;
+    margin-left: -20px;
+}
+
+h1
+{
+    font-size: 2.5em;
+    line-height: 1em;
+    margin-bottom: 1em;
+}
+
+h2
+{
+    font-size: 1.5em;
+    line-height: 1em;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    margin-left: -10px;
+}
+
+h3
+{
+    font-size: 1.1em;
+    line-height: 1.1em;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    margin-left: -10px;
+}
+
+p
+{
+    margin-bottom: 20px;
+    white-space: normal;
+}
+
+strong
+{
+    font-weight: bold;
+}
+
+em
+{
+    font-style: italic;
+}
+
+ol
+{
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+ul
+{
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+ul li
+{
+    padding-left: 15px;
+    background-image: url(/static/bullet.png);
+    background-repeat: no-repeat;
+    background-position: 0 8px;
+    margin: 5px 0;
+}
+
+form
+{
+    float: left;
+}
+
+div.form_row
+{
+    margin-top: 10px;
+    float:left;
+    clear: both;
+}
+
+div.form_label
+{
+    float: left;
+    width: 200px;
+}
+
+div.form_input
+{
+    float: left;
+}
+
+div.form_input ul
+{
+    margin: 0;
+}
+
+div.form_input ul li
+{
+    padding: 0;
+    background-image: none;
+}
+
+div.form_input input, div.form_input textarea
+{
+    width: 200px;
+    font-size: 16px;
+    line-height: 16px;
+    border: 2px solid;
+    border-color: #666 #aaa #aaa #666;
+}
+
+div.form_input textarea
+{
+    width: 400px;
+    height: 100px;
+}
+
+div.small_input input
+{
+    width: 16px;
+}
+
+div.form_submit
+{
+    clear: both;
+    padding: 20px 0 20px 200px;
+}
+
+div.form_submit input
+{
+    float: none;
+}
+
+div.form_errors
+{
+    float: left;
+    color: #f00;
+    font-size: 11px;
+    line-height: 10px;
+}
+
+div.form_errors ul
+{
+    margin-bottom: 0;
+}
+
+div.form_errors ul li
+{
+    background-image: none;
+    padding: 0;
+    list-style-type: disc;
+}
+
+table.data
+{
+    width:100%;
+    border-collapse: collapse;
+}
+
+table.data td, th
+{
+    padding: 3px;
+    border: 1px solid #444;
+}
+
+table.data tr.even td
+{
+    background-color: #222;
+}
+
+table.data tr.unranked td
+{
+    background-color: #200;
+}
+
+table.data tr.mine td
+{
+    background-color: #050;
+}
+
+table.data th
+{
+    font-size: 0.8em;
+    line-height: 1.2em;
+    font-weight: bold;
+    background-color: #777;
+    color: #000;
+}
+
+td.number, th.number
+{
+    text-align: right;
+}
+
+table.overview
+{
+    border-collapse: collapse;
+}
+
+table.overview td
+{
+    border: 1px solid #444;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 10px;
+}
+
+table.overview td div
+{
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+table.overview td.reactor
+{
+    background-color: #fff;
+}
+
+table.overview td.unknown
+{
+    background-color: #f00;
+}
+
+table.overview td.component
+{
+    background-color: #666;
+}
+
+table.overview td.component div
+{
+    line-height: 15px;
+}
+
+table.overview td.reactor div
+{
+    width: 80px;
+    height: 72px;
+    vertical-align: middle;
+    padding-top: 8px;
+}
+
+table.overview td.reactor a
+{
+    color: #000;
+}
+
+table.overview td.reactor span.number
+{
+    font-size: 40px;
+}
+
+table.overview td.pipe div.half
+{
+    height: 10px;
+}
+
+table.solution
+{
+    background-image: url(/static/solution_background.png);
+    background-repeat: no-repeat;
+    width: 791px;
+    height: 633px;
+    border-collapse: collapse;
+    padding: 1px;
+    margin-bottom: 10px;
+}
+
+table.drag-assembly-reactor
+{
+    background-image: url(/static/assembly_background.png);
+}
+
+table.drag-disassembly-reactor
+{
+    background-image: url(/static/disassembly_background.png);
+}
+
+table.drag-largeoutput-reactor
+{
+    background-image: url(/static/largeoutput_background.png);
+}
+
+table.drag-superlaser-reactor
+{
+    background-image: url(/static/laser_background.png);
+}
+
+table.solution td
+{
+    width: 78px;
+    height: 78px;
+    line-height: 0;
+    border: 2px solid transparent;
+    vertical-align: top;
+}
+
+table.solution td div
+{
+    position: relative;
+    left: 0;
+    top: 0;
+}
+
+table.solution img.red
+{
+    position: absolute;
+    left: 11px;
+    top: 11px;
+}
+
+table.solution img.red.l
+{
+    left: 5px;
+}
+
+table.solution img.red.u
+{
+    top: 5px;
+}
+
+table.solution div.red, table.solution div.blue
+{
+    z-index: 4;
+    font-size: 10px;
+    color: #000;
+}
+
+table.solution div.red
+{
+    position: absolute;
+    width: 31px;
+    height: 31px;
+    text-align: center;
+    line-height: 31px;
+    left: 11px;
+    top: 11px;
+}
+
+table.solution div.red.u
+{
+    top: 8px;
+    line-height: 37px;
+}
+
+table.solution div.blue
+{
+    position: absolute;
+    width: 31px;
+    height: 31px;
+    text-align: center;
+    line-height: 31px;
+    left: 35px;
+    top: 35px;
+}
+
+table.solution div.blue.u
+{
+    top: 32px;
+    line-height: 37px;
+}
+
+table.solution img.blue
+{
+    position: absolute;
+    left: 35px;
+    top: 35px;
+}
+
+table.solution img.blue.l
+{
+    left: 29px;
+}
+
+table.solution img.blue.u
+{
+    top: 29px;
+}
+
+table.solution img.red-arrow, table.solution img.blue-arrow, table.solution img.blue-path, table.solution img.red-path
+{
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+img.red, img.blue
+{
+    z-index: 3;
+}
+
+img.red-arrow, img.blue-arrow
+{
+    z-index: 2;
+}
+
+img.red-path, img.blue-path
+{
+    z-index: 1;
+}
+
+body
+{
+    background-color: #000;
+    margin-top: 20px;
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 16px;
+    color: #fff;
+    line-height: 24px;
+}
+
+div#wrapper
+{
+    margin: 10px auto;
+    width: 80%;
+    min-width: 1100px;
+}
+
+div#menu
+{
+    float: left;
+    padding-top: 5px;
+    width: 250px;
+    font-weight: bold;
+}
+
+div#menu img
+{
+    margin: 0 auto 20px 0;
+}
+
+div.warning
+{
+    border: 1px solid #ddd;
+    background-color: #333;
+    font-weight: bold;
+    color: #f00;
+    margin: 20px;
+    padding: 5px;
+}
+
+ul#messages
+{
+    border: 1px solid #ddd;
+    background-color: #333;
+    font-weight: bold;
+}
+
+ul#messages li
+{
+    background-image: none;
+}
+
+ul#messages li.error
+{
+    color: #f00;
+}
+
+div#content
+{
+    overflow: hidden;
+    padding-left: 20px;
+}
+
+div#footer
+{
+    clear: both;
+    margin-top: 30px;
+    border-top: 1px solid #bbb;
+    text-align: center;
+    color: #aaa;
+    font-size: 12px;
+}
+
+.small
+{
+    font-size: 10px;
+    line-height: 13px;
+}
+
+div.light
+{
+    color: #ccc;
+}

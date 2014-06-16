@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}SolutionNet Leaderboards - "{{ level.name|safe }}", by least {{ type }} - {% endblock %}
+
+{% block content %}
+<h1>SolutionNet Leaderboards</h1>
+<h2>"{{ level.name|safe }}", by least {{ type }}</h2>
+
+{% if type == 'cycles' %}
+<p><a href="/leaderboards/{{ level.slug }}/symbols">Switch to least symbols leaderboard</a></p>
+{% elif type == 'symbols' %}
+<p><a href="/leaderboards/{{ level.slug }}/cycles">Switch to least cycles leaderboard</a></p>
+{% endif %}
+
+{% if not level.internal_name.endswith('-boss') %}
+<p><a href="/solution-stats/{{ level.slug }}">View official solution statistics for this level</a></p>
+{% endif %}
+
+{% if reactor_options|length > 1 %}
+    {% if reactors == 0 %}
+    <p>Viewing leaderboards for any number of reactors, 
+    {% else %}
+    <p>Viewing leaderboards for {{ reactors }} reactors, switch to <a href="/leaderboards/{{ level.slug }}/{{ type }}">any number of reactors</a> or 
+    {% endif %}
+    restrict to: 
+    {% for reactor in reactor_options %}
+        {% if reactor == 1 %}
+        <a href="/leaderboards/{{ level.slug }}/{{ type }}/1-reactor">1 reactor</a> 
+        {% else %}
+        <a href="/leaderboards/{{ level.slug }}/{{ type }}/{{ reactor[0] }}-reactors">{{ reactor[0] }} reactors</a>{% if not loop.last %} / {% endif %}
+        {% endif %}
+    {% endfor %}
+    </p>
+{% endif %}
+
+{% if solution_ranks|length > 0 %}
+<table class="data">
+<tr>
+    <th>#</th>
+    <th>User</th>
+    {% if type == 'cycles' %}
+    <th>Cycles</th>
+    <th>Symbols</th>
+    {% else %}
+    <th>Symbols</th>
+    <th>Cycles</th>
+    {% endif %}
+    <th>Reactors</th>
+    <th>Uploaded</th>
+</tr>
+{% for solution_rank in solution_ranks %}
+{% set solution = solution_rank.solution %}
+    {% if  solution.user.username == session['username'] %}
+    <tr class="mine">
+    {% else %}
+    <tr class="{{ loop.cycle('odd','even') }}">
+    {% endif %}
+        <td>{{ solution_rank.rank }}</td>
+        <td style="width:100%">
+            <a href="/solution/{{ level.slug }}/{{ solution.solution_id }}">{{ solution.user.username }}</a>
+            {% if solution.youtube %}
+            <a href="{{ solution.youtube }}" target="_blank" style="font-style:italic;float:right;margin-top:5px;" class="small">view on YouTube</a>
+            {% endif %}
+            {% if solution.description %}
+            <br /><div class="small light">{{ solution.description }}</div>
+            {% endif %}
+        </td>
+        {% if type == 'cycles' %}
+        <td class="number">{{ solution.cycle_count }}</td>
+        <td class="number">{{ solution.symbol_count }}</td>
+        {% else %}
+        <td class="number">{{ solution.symbol_count }}</td>
+        <td class="number">{{ solution.cycle_count }}</td>
+        {% endif %}
+        <td class="number">{{ solution.reactor_count }}</td>
+        <td style="white-space: nowrap">{{ solution.upload_time.strftime('%Y-%m-%d, %H:%M') }}</td>
+    </tr>
+{% endfor %}
+</table>
+{% else %}
+<p>No solutions have been uploaded for this level yet.</p>
+{% endif %}
+
+{% endblock %}

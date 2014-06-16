@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }} - {% endblock %}
+{% block content %}
+<h1>{{ user.username }}</h1>
+
+{% for solutions in (main_solutions, researchnet_solutions, tf2_solutions, corvi_solutions) %}
+    {% if solutions %}
+    <h2>{{ loop.cycle('Main Game', 'ResearchNet Published', 'TF2', '63 Corvi DLC') }} Solutions</h2>
+    <table class="data">
+    <tr><th>Level</th><th class="number">Cycles</th><th class="number">Symbols</th><th class="number">Reactors</th><th>Uploaded</th></tr>
+    {% for solution in solutions %}
+
+    {% set cycle_rank = [] %}
+    {% set cycle_rank_reactors = [] %}
+    {% set symbol_rank = [] %}
+    {% set symbol_rank_reactors = [] %}
+    {% for rank in solution.ranks %}
+        {% if rank.leaderboard_id == 1 %}
+            {% if rank.reactors == 0 %}
+                {% do cycle_rank.append(rank.rank_str) %}
+            {% else %}
+                {% do cycle_rank_reactors.append((rank.rank_str, rank.reactors)) %}
+            {% endif %}
+        {% elif rank.leaderboard_id == 2 %}
+            {% if rank.reactors == 0 %}
+                {% do symbol_rank.append(rank.rank_str) %}
+            {% else %}
+                {% do symbol_rank_reactors.append((rank.rank_str, rank.reactors)) %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    {% if not cycle_rank[0] and not cycle_rank_reactors[0] and not symbol_rank[0] and not symbol_rank_reactors[0] %}
+        <tr class="unranked">
+    {% else %}
+        <tr class="{{ loop.cycle('odd', 'even') }}">
+    {% endif %}
+        <td style="width:100%">
+            <a href="/solution/{{ solution.level.slug }}/{{ solution.solution_id }}">{{ solution.level.number}} - {{ solution.level.name|safe }}</a>
+            {% if solution.youtube %}
+            <a href="{{ solution.youtube }}" target="_blank" style="font-style:italic;float:right;margin-top:5px;" class="small">view on YouTube</a>
+            {% endif %}
+            {% if solution.description %}
+            <br /><div class="small light">{{ solution.description }}</div>
+            {% endif %}
+        </td>
+        <td class="number">{{ solution.cycle_count }}<br /><div class="small" style="white-space: nowrap">
+        {% if cycle_rank[0] %}
+            <a href="/leaderboards/{{ solution.level.slug }}/cycles">{{ cycle_rank[0] }}</a>{% if cycle_rank_reactors[0] %} /{% endif %}
+        {% endif %}
+        {% if cycle_rank_reactors[0] %}
+            <a href="/leaderboards/{{ solution.level.slug }}/cycles/{{ cycle_rank_reactors[0][1] }}-reactors">{{ cycle_rank_reactors[0][0] }} ({{ cycle_rank_reactors[0][1] }}R)</a>
+        {% endif %}
+        {% if not cycle_rank[0] and not cycle_rank_reactors[0] %}
+            &nbsp;
+        {% endif %}
+        </div></td>
+        <td class="number">{{ solution.symbol_count }}<br /><div class="small" style="white-space: nowrap">
+        {% if symbol_rank[0] %}
+            <a href="/leaderboards/{{ solution.level.slug }}/symbols">{{ symbol_rank[0] }}</a>{% if symbol_rank_reactors[0] %} /{% endif %}
+        {% endif %}
+        {% if symbol_rank_reactors[0] %}
+            <a href="/leaderboards/{{ solution.level.slug }}/symbols/{{ symbol_rank_reactors[0][1] }}-reactors">{{ symbol_rank_reactors[0][0] }} ({{ symbol_rank_reactors[0][1] }}R)</a>
+        {% endif %}
+        {% if not symbol_rank[0] and not symbol_rank_reactors[0] %}
+            &nbsp;
+        {%endif %}
+        </div></td>
+        <td class="number">{{ solution.reactor_count }}</td>
+        <td style="white-space: nowrap">{{ solution.upload_time.strftime('%Y-%m-%d, %H:%M') }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+    {% endif %}
+{% endfor %}
+{% endblock %}

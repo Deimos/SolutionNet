@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}SolutionNet Leaderboards - {% endblock %}
+
+{% block content %}
+<h1>SolutionNet Leaderboards</h1>
+
+<h2>Main Levels</h2>
+<table class="data">
+{% for level in main_levels %}
+    <tr><td>{{ level.number }} - {{ level.name|safe }}</td><td><a href="/leaderboards/{{ level.slug }}/cycles">least cycles</a></td><td><a href="/leaderboards/{{ level.slug }}/symbols">least symbols</a></td></tr>
+{% endfor %}
+</table>
+
+<h2>Published ResearchNet Levels</h2>
+<table class="data">
+{% for level in published_levels %}
+    <tr><td>{{ level.number }} - {{ level.name|safe }}</td><td><a href="/leaderboards/{{ level.slug }}/cycles">least cycles</a></td><td><a href="/leaderboards/{{ level.slug }}/symbols">least symbols</a></td></tr>
+{% endfor %}
+</table>
+
+<h2>TF2 Levels</h2>
+<table class="data">
+{% for level in tf2_levels %}
+    <tr><td>{{ level.number }} - {{ level.name|safe }}</td><td><a href="/leaderboards/{{ level.slug }}/cycles">least cycles</a></td><td><a href="/leaderboards/{{ level.slug }}/symbols">least symbols</a></td></tr>
+{% endfor %}
+</table>
+
+<h2>63 Corvi DLC Levels</h2>
+<table class="data">
+{% for level in corvi_levels %}
+    <tr><td>{{ level.number }} - {{ level.name|safe }}</td><td><a href="/leaderboards/{{ level.slug }}/cycles">least cycles</a></td><td><a href="/leaderboards/{{ level.slug }}/symbols">least symbols</a></td></tr>
+{% endfor %}
+</table>
+{% endblock %}

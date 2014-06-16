@@ -1,0 +1,106 @@
+{% from "_form_macros.html" import render_field %}
+{% extends "base.html" %}
+
+{% block title %}"{{ solution.level.name|safe }}" Solution - {% endblock %}
+
+{% block content %}
+<h1>"{{ solution.level.name|safe }}" Solution</h1>
+
+{% if not solution.approved %}
+<div class="warning">This solution has not yet been approved for upload, so it is not visible to any other users.<br />
+<a href="/unapproved">View list of unapproved solutions</a></div>
+{% endif %}
+
+<p>Uploaded by <a href="/user/{{ solution.user.username }}">{{ solution.user.username }}</a>
+{% if session['user_id'] == solution.user_id %}
+ &mdash; <a href="/solution-delete/{{ solution.solution_id }}" style="color: #f00">[ Delete this solution ]</a>
+{% endif %}
+</p>
+<ul>
+    <li>{{ solution.cycle_count }} cycles, {{ solution.symbol_count }} symbols, {{ solution.reactor_count }} reactors</li>
+    {% for rank in solution.ranks %}
+    {% if solution.level.outside_view %}
+        {% if rank.reactors == 0 %}
+        <li>Ranked {{ rank.rank_str }} on the <a href="/leaderboards/{{ solution.level.slug }}/{{ rank.leaderboard.slug }}">{{ rank.leaderboard.description }} leaderboard (any number of reactors)</a></li>
+        {% else %}
+        <li>Ranked {{ rank.rank_str }} on the <a href="/leaderboards/{{ solution.level.slug }}/{{ rank.leaderboard.slug }}/{{ rank.reactors }}-reactors">{{ rank.leaderboard.description }} leaderboard ({{ rank.reactors }} reactors)</a></li>
+        {% endif %}
+    {% else %}
+        <li>Ranked {{ rank.rank_str }} on the <a href="/leaderboards/{{ solution.level.slug }}/{{ rank.leaderboard.slug }}">{{ rank.leaderboard.description }} leaderboard</a></li>
+    {% endif %}
+    {% endfor %}
+</ul>
+
+{% if session['user_id'] == solution.user_id %}
+<form method="post">
+    {{ form.hidden_tag() }}
+    {{ render_field(form.description) }}
+    {{ render_field(form.youtube) }}
+    <div class="form_submit">{{ form.submit }}</div>
+</form>
+{% else %}
+    {% if solution.description %}
+    <p><strong>Description:</strong> {{ solution.description }}</p>
+    {% endif %}
+    {% if solution.youtube %}
+    <p><a href="{{ solution.youtube }}" target="_blank">View this solution on YouTube</a></p>
+    {% endif %}
+{% endif %}
+
+{% if solution.level.outside_view %}
+<h2>Overview</h2>
+<table class="overview">
+    {% for y in range(0, 22) %}
+    <tr>
+        {% for x in range(0, 32) %}
+            {% if overview[(x, y)][0] == 'reactor' %}
+                <td class="reactor" rowspan="4" colspan="4"><div><a href="#reactor-{{ overview[(x, y)][1] }}">Reactor<br /><span class="number">#{{ overview[(x, y)][1] }}</span></a></div></td>
+            {% elif overview[(x, y)][0] == 'component' %}
+                <td class="component" rowspan="{{ overview[(x, y)][3] }}" colspan="{{ overview[(x, y)][2] }}"><div style="height: {{ 20 * overview[(x, y)][3] }}px; width: {{ 20 * overview[(x, y)][2] }}px">{{ overview[(x, y)][4] }}</div></td>
+            {% elif overview[(x, y)][0] == 'pipe' %}
+                <td class="{{ overview[(x, y)][0] }}">
+                {% if overview[(x, y)][2] %}
+                    <div class="half" style="background-color:{{ overview[(x, y)][1] }}"></div>
+                    <div class="half" style="background-color:{{ overview[(x, y)][2] }}">
+                {% else %}
+                    <div style="background-color:{{ overview[(x, y)][1] }}">
+                {% endif %}
+                </div></td>
+            {% elif overview[(x, y)][0] == 'unknown' %}
+                <td class="{{ overview[(x, y)][0] }}"><div>{{ overview[(x, y)][1] }}</div></td>
+            {% elif overview[(x, y)][0] != 'skip' %}
+                <td><div></div></td>
+            {% endif %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+{% for reactor in reactors %}
+<a name="reactor-{{ loop.index }}"></a>
+<h2>Reactor #{{ loop.index }}</h2>
+    <table class="solution {{ reactor[2] }}" cellspacing="1">
+    {% for y in range(0, 8) %}
+        <tr>
+        {% for x in range(0, 10) %}
+            <td><div>
+                {% if reactor[0][(x, y)] %}
+                    {% for instr in reactor[0][(x, y)] %}
+                        <img class="{{ instr[1] }}" src="/static/members/{{ instr[0] }}" />
+                        {% if instr[2] %}<div class="{{ instr[1] }}">{{ ELEMENTS[instr[2]] }}</div>{% endif %}
+                    {% endfor %}
+                {% endif %}
+                {% if reactor[1]['red'][(x, y)]['edges'] %}
+                    <img class="red-path" src="/static/members/red-path_{% for d in reactor[1]['red'][(x, y)]['edges']|sort %}{{d}}{% endfor %}.png" />
+                {% endif %}
+                {% if reactor[1]['blue'][(x, y)]['edges'] %}
+                    <img class="blue-path" src="/static/members/blue-path_{% for d in reactor[1]['blue'][(x, y)]['edges']|sort %}{{d}}{% endfor %}.png" />
+                {% endif %}
+            </div></td>
+        {% endfor %}
+        </tr>
+    {% endfor %}
+    </table>
+{% endfor %}
+{% endblock %}

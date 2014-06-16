@@ -1,0 +1,15 @@
+{% from "_form_macros.html" import render_field %}
+{% extends "base.html" %}
+
+{% block title %}Login - {% endblock %}
+
+{% block content %}
+<h1>Login</h1>
+<form method="post" action="/login">
+    {{ form.hidden_tag() }}
+    {{ render_field(form.username) }}
+    {{ render_field(form.password) }}
+    {{ render_field(form.remember, True) }}
+    <div class="form_submit">{{ form.submit }}</div>
+</form>
+{% endblock %}

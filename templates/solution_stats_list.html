@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Solution Statistics - {% endblock %}
+
+{% block content %}
+<h1>Solution Statistics</h1>
+
+<h2>Main Levels</h2>
+<ol>
+{% for level in main_levels %}
+    {% if level.internal_name.endswith('-boss') %}
+    <li>{{ level.number }} - {{ level.name|safe }}</a></li>
+    {% else %}
+    <li><a href="/solution-stats/{{ level.slug }}">{{ level.number }} - {{ level.name|safe }}</a></li>
+    {% endif %}
+{% endfor %}
+</ol>
+
+<h2>Published ResearchNet Levels</h2>
+<ol>
+{% for level in published_levels %}
+    <li><a href="/solution-stats/{{ level.slug }}">{{ level.number }} - {{ level.name|safe }}</a></li>
+{% endfor %}
+</ol>
+
+<h2>TF2 Levels</h2>
+<ol>
+{% for level in tf2_levels %}
+    <li><a href="/solution-stats/{{ level.slug }}">{{ level.number }} - {{ level.name|safe }}</a></li>
+{% endfor %}
+</ol>
+
+<h2>63 Corvi DLC Levels</h2>
+<ol>
+{% for level in corvi_levels %}
+    {% if level.internal_name.endswith('-boss') %}
+    <li>{{ level.number }} - {{ level.name|safe }}</a></li>
+    {% else %}
+    <li><a href="/solution-stats/{{ level.slug }}">{{ level.number }} - {{ level.name|safe }}</a></li>
+    {% endif %}
+{% endfor %}
+</ol>
+{% endblock %}

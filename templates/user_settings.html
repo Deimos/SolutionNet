@@ -1,0 +1,16 @@
+{% from "_form_macros.html" import render_field %}
+{% extends "base.html" %}
+
+{% block title %}Change User Settings - {% endblock %}
+
+{% block content %}
+<h1>Change User Settings</h1>
+<form method="post" action="/user-settings">
+    {{ form.hidden_tag() }}
+    {{ render_field(form.password) }}
+    {{ render_field(form.email) }}
+    {{ render_field(form.new_password) }}
+    {{ render_field(form.new_password_confirm) }}
+    <div class="form_submit">{{ form.submit }}</div>
+</form>
+{% endblock %}
